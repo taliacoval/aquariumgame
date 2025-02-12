@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/2.0 Objects.iml" filepath="$PROJECT_DIR$/2.0 Objects.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aquariumGame.iml" filepath="$PROJECT_DIR$/aquariumGame.iml" />
     </modules>
   </component>
 </project>
