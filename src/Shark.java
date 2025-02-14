@@ -14,6 +14,8 @@ public class Shark {
     public boolean isAlive;            //a boolean to denote if the shark is alive or dead.
     public Rectangle rec;
 
+
+//makes method for shark to wrap around screen
     public void wrap(){
         if (xpos>1000){
             xpos = 0;
@@ -27,6 +29,7 @@ public class Shark {
         if (ypos<0){
             ypos=700;
         }
+        //tells fish how to move
         xpos = xpos + dx;
         ypos = ypos + dy;
         rec = new Rectangle(xpos, ypos, width, height);
@@ -39,6 +42,7 @@ public class Shark {
 
     //This is a SECOND constructor that takes 3 parameters.  This allows us to specify the hero's name and position when we build it.
     // if you put in a String, an int and an int the program will use this constructor instead of the one above.
+    //creates shark object
     public Shark(int pXpos, int pYpos) {
         xpos = pXpos;
         ypos = pYpos;

@@ -112,7 +112,7 @@ public class AquariumGame implements Runnable {
 
 
 		public void moveThings() {
-			//calls the move( ) code in the objects
+			//tells different fish to bounce/wrap
 			goldFish.bounce();
 			blueFish.bounce();
 			redFish.wrap();
@@ -145,7 +145,7 @@ public class AquariumGame implements Runnable {
 
 				}
 
-				//shark eats fish when they intersect
+				//shark eats all following fish when they intersect
 				if (goldFish.rec.intersects(sharky.rec)){
 					goldFish.isAlive = false;
 					sharky.dx = sharky.dx+1;
@@ -215,7 +215,7 @@ public class AquariumGame implements Runnable {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
-      //draw the image of the fish and shark
+      //draw the image of the fish and shark if they are alive
 		g.drawImage(background, 0,0,WIDTH, HEIGHT, null);
 		if (goldFish.isAlive) {
 			g.drawImage(fishPic, goldFish.xpos, goldFish.ypos, goldFish.width, goldFish.height, null);

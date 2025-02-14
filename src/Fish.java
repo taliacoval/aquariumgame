@@ -17,6 +17,8 @@ public class Fish {
     public boolean isAlive; //a boolean to denote if the fish is alive or dead.
     public Rectangle rec;
 
+
+//creates bounce method for fish to bounce back when they hit a wall
     public void bounce(){
         //bounce of east wall
         if (xpos>1000){
@@ -44,6 +46,8 @@ public class Fish {
         ypos = ypos + dy;
         rec = new Rectangle(xpos, ypos, width, height);
     }
+
+    //creates wrap method for fish to wrap around screen
     public void wrap(){
         if (xpos>1000){
             xpos = 0;
@@ -69,6 +73,7 @@ public class Fish {
 
     //This is a SECOND constructor that takes 3 parameters.  This allows us to specify the hero's name and position when we build it.
     // if you put in a String, an int and an int the program will use this constructor instead of the one above.
+     //creates fish obkect
     public Fish(int pXpos, int pYpos) {
         xpos = pXpos;
         ypos = pYpos;
