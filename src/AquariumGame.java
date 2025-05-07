@@ -13,6 +13,8 @@
 
 //Graphics Libraries
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import javax.swing.JFrame;
@@ -22,7 +24,7 @@ import javax.swing.JPanel;
 //*******************************************************************************
 // Class Definition Section
 
-public class AquariumGame implements Runnable {
+public class AquariumGame implements Runnable, KeyListener {
 
    //Variable Definition Section
    //Declare the variables used in the program 
@@ -36,7 +38,9 @@ public class AquariumGame implements Runnable {
 	public JFrame frame;
 	public Canvas canvas;
    public JPanel panel;
-   
+
+   public Bubbles[] bob = new Bubbles[10];
+
 	public BufferStrategy bufferStrategy;
 	public Image fishPic;
 	public Image fishPic2;
@@ -44,6 +48,7 @@ public class AquariumGame implements Runnable {
 	public Image fishPic4;
 	public Image sharkyPic;
 	public Image background;
+	public Image bubbles;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
@@ -75,6 +80,7 @@ public class AquariumGame implements Runnable {
 		sharky = new Shark(123,321);
 		sharky.width = 200;
 		sharky.height = 200;
+		bubbles = Toolkit.getDefaultToolkit().getImage("bubbles.jpg");
 		fishPic = Toolkit.getDefaultToolkit().getImage("goldfish.png"); //load the picture
 		goldFish = new Fish(10,100);
 		fishPic2 = Toolkit.getDefaultToolkit().getImage("bluefish-removebg-preview.png");
@@ -86,7 +92,9 @@ public class AquariumGame implements Runnable {
 		sharkyPic = Toolkit.getDefaultToolkit().getImage("sharkImage.png");
 		background = Toolkit.getDefaultToolkit().getImage("background.png");
 
-
+		for(int x=0;x<10; x++){
+			bob[x]=new Bubbles((int)(Math.random()*250), 100);
+		}
 
 
 	}// BasicGameApp()
@@ -118,6 +126,10 @@ public class AquariumGame implements Runnable {
 			redFish.wrap();
 			purpleFish.wrap();
 			sharky.wrap();
+			for(int x=0; x<bob.length; x++) {
+				bob[x].bounce();
+			}
+
 			collisions();
 		}
 		//code for when the different fish collide
@@ -148,23 +160,23 @@ public class AquariumGame implements Runnable {
 				//shark eats all following fish when they intersect
 				if (goldFish.rec.intersects(sharky.rec)){
 					goldFish.isAlive = false;
-					sharky.dx = sharky.dx+1;
-					sharky.dy = sharky.dy+1;
+			//		sharky.dx = sharky.dx+1;
+			//		sharky.dy = sharky.dy+1;
 				}
 				if (blueFish.rec.intersects(sharky.rec)){
 					blueFish.isAlive = false;
-					sharky.dx = sharky.dx+1;
-					sharky.dy = sharky.dy+1;
+			//		sharky.dx = sharky.dx+1;
+			//		sharky.dy = sharky.dy+1;
 				}
 				if (redFish.rec.intersects(sharky.rec)){
 					redFish.isAlive = false;
-					sharky.dx = sharky.dx+1;
-					sharky.dy = sharky.dy+1;
+			//		sharky.dx = sharky.dx+1;
+			//		sharky.dy = sharky.dy+1;
 				}
 				if (purpleFish.rec.intersects(sharky.rec)){
 					purpleFish.isAlive = false;
-					sharky.dx = sharky.dx+1;
-					sharky.dy = sharky.dy+1;
+				//	sharky.dx = sharky.dx+1;
+				//	sharky.dy = sharky.dy+1;
 
 				}
 			}
@@ -205,7 +217,9 @@ public class AquariumGame implements Runnable {
       canvas.createBufferStrategy(2);
       bufferStrategy = canvas.getBufferStrategy();
       canvas.requestFocus();
+	  canvas.addKeyListener(this);
       System.out.println("DONE graphic setup");
+
    
    }
 
@@ -231,6 +245,9 @@ public class AquariumGame implements Runnable {
 		}
 		g.drawImage(sharkyPic, sharky.xpos, sharky.ypos, sharky.width, sharky.height, null);
 
+		for(int x=0; x<bob.length; x++){
+			g.drawImage(bubbles, bob[x].xpos, bob[x].ypos, bob[x].width, bob[x].height, null);
+		}
 		//making fish come back to life once every fish is dead
 		if (goldFish.isAlive==false && redFish.isAlive==false && blueFish.isAlive==false && purpleFish.isAlive==false){
 			g.drawImage(fishPic, goldFish.xpos, goldFish.ypos, goldFish.width, goldFish.height, null);
@@ -247,4 +264,29 @@ public class AquariumGame implements Runnable {
 
 		bufferStrategy.show();
 	}
+
+@Override
+public void keyTyped(KeyEvent e) { //don't use this one we don't know what it does
+
+}
+
+@Override
+public void keyPressed(KeyEvent e) {
+	System.out.println("pressed????");
+	System.out.println(e.getKeyChar());
+	System.out.println(e.getKeyCode());
+	//identify key codes for up, down, left, right arrow keys
+	//up=38, down=40, right=39, left=37
+	if(e.getKeyCode()==32){
+		blueFish.isAlive = true;
+		redFish.isAlive = true;
+		goldFish.isAlive = true;
+		purpleFish.isAlive = true;
+	}
+}
+
+@Override
+public void keyReleased(KeyEvent e) {
+	//makes astros stop when key is released
+}
 }
